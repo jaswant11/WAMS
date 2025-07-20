@@ -1,0 +1,32 @@
+# ====== Java (Spring Boot) ======
+target/
+*.class
+*.jar
+*.war
+*.log
+
+# ====== Maven ======
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+
+# ====== React (Node) ======
+node_modules/
+build/
+dist/
+.env
+
+# ====== Python ======
+__pycache__/
+*.pyc
+.env
+
+# ====== System / OS Files ======
+.DS_Store
+Thumbs.db
+
+# ====== IDEs ======
+.idea/
+.vscode/
+*.iml
