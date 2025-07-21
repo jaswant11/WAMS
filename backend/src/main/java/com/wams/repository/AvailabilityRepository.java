@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface AvailabilityRepository extends JpaRepository<Availability, Long> {
-    List<Availability> findByEmployee(Employee employee);
     List<Availability> findByEmployeeAndDate(Employee employee, LocalDate date);
     List<Availability> findByEmployeeAndDateBetween(Employee employee, LocalDate start, LocalDate end);
 }

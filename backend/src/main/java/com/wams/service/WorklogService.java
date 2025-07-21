@@ -1,43 +1,48 @@
 package com.wams.service;
 
-import com.wams.model.Employee;
 import com.wams.model.Worklog;
-import com.wams.repository.EmployeeRepository;
+import com.wams.model.Employee;
 import com.wams.repository.WorklogRepository;
+import com.wams.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WorklogService {
 
     @Autowired
-    private WorklogRepository worklogRepo;
+    private WorklogRepository worklogRepository;
 
     @Autowired
-    private EmployeeRepository employeeRepo;
+    private EmployeeRepository employeeRepository;
 
-    public Worklog logWork(Long employeeId, Worklog worklog) {
-        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
-        worklog.setEmployee(employee);
-        return worklogRepo.save(worklog);
+    public List<Worklog> getAllWorklogs() {
+        return worklogRepository.findAll();
     }
 
-    public List<Worklog> getWorklogsForEmployee(Long employeeId) {
-        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
-        return worklogRepo.findByEmployeeAndDateBetween(
-                employee,
-                LocalDate.now().minusDays(30),
-                LocalDate.now()
-        );
+    public Worklog addWorklog(Long employeeId, Worklog worklog) {
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+        if (employee.isPresent()) {
+            worklog.setEmployee(employee.get());
+            return worklogRepository.save(worklog);
+        } else {
+            throw new RuntimeException("Employee not found with ID: " + employeeId);
+        }
     }
 
-    public List<Worklog> getWorklogsBetweenDates(Long employeeId, String start, String end) {
-        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
-        LocalDate startDate = LocalDate.parse(start);
-        LocalDate endDate = LocalDate.parse(end);
-        return worklogRepo.findByEmployeeAndDateBetween(employee, startDate, endDate);
+    public List<Worklog> getWorklogsByEmployee(Long employeeId) {
+        return worklogRepository.findByEmployeeId(employeeId);
+    }
+
+    public List<Worklog> getWorklogsByEmployeeAndDate(Long employeeId, LocalDate date) {
+        return worklogRepository.findByEmployeeIdAndDate(employeeId, date);
+    }
+
+    public void deleteWorklog(Long id) {
+        worklogRepository.deleteById(id);
     }
 }

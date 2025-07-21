@@ -9,30 +9,41 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TimeOffService {
 
     @Autowired
-    private TimeOffRepository timeOffRepo;
+    private TimeOffRepository timeOffRepository;
 
     @Autowired
-    private EmployeeRepository employeeRepo;
+    private EmployeeRepository employeeRepository;
 
     public TimeOff requestTimeOff(Long employeeId, TimeOff timeOff) {
-        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
-        timeOff.setEmployee(employee);
-        return timeOffRepo.save(timeOff);
+        Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
+        if (employeeOpt.isPresent()) {
+            timeOff.setEmployee(employeeOpt.get());
+            return timeOffRepository.save(timeOff);
+        }
+        throw new RuntimeException("Employee not found with ID: " + employeeId);
     }
 
-    public List<TimeOff> getTimeOffForEmployee(Long employeeId) {
-        return timeOffRepo.findByEmployeeId(employeeId);
+    public List<TimeOff> getTimeOffsByEmployee(Long employeeId) {
+        Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
+        if (employeeOpt.isPresent()) {
+            return timeOffRepository.findByEmployee(employeeOpt.get());
+        }
+        throw new RuntimeException("Employee not found with ID: " + employeeId);
     }
 
-    public List<TimeOff> getTimeOffBetweenDates(Long employeeId, String start, String end) {
-        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
-        LocalDate startDate = LocalDate.parse(start);
-        LocalDate endDate = LocalDate.parse(end);
-        return timeOffRepo.findByEmployeeAndDateBetween(employee, startDate, endDate);
+    public boolean hasTimeOffOnDate(Long employeeId, LocalDate date) {
+        Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
+        if (employeeOpt.isPresent()) {
+            List<TimeOff> timeOffs = timeOffRepository
+                .findByEmployeeAndStartDateLessThanEqualAndEndDateGreaterThanEqual(employeeOpt.get(), date, date);
+            return !timeOffs.isEmpty();
+        }
+        return false;
     }
 }
