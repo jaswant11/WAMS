@@ -1,7 +1,7 @@
 package com.wams.controller;
 
 import com.wams.model.User;
-import com.wams.repository.UserRepository;
+import com.wams.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,16 +11,13 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
-    // Simple login endpoint (for demo purpose)
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginRequest) {
-        User user = userRepository.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
-        if (user != null) {
-            return ResponseEntity.ok(user); // frontend will use role to redirect dashboard
-        } else {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        }
+        return userService.findByEmail(loginRequest.getEmail())
+                .filter(user -> user.getPassword().equals(loginRequest.getPassword()))
+                .map(user -> ResponseEntity.ok(user))
+                .orElseGet(() -> ResponseEntity.status(401).body("Invalid email or password"));
     }
 }

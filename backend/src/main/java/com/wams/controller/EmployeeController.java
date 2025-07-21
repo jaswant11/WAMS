@@ -1,39 +1,29 @@
 package com.wams.controller;
 
-import com.wams.model.User;
-import com.wams.service.UserService;
+import com.wams.model.Employee;
+import com.wams.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
 
     @Autowired
-    private UserService userService;
+    private EmployeeRepository employeeRepository;
 
-    // Get all employees (role = "employee")
     @GetMapping
-    public ResponseEntity<List<User>> getAllEmployees() {
-        List<User> employees = userService.getAllUsers().stream()
-            .filter(user -> "employee".equalsIgnoreCase(user.getRole()))
-            .collect(Collectors.toList());
-        return ResponseEntity.ok(employees);
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
     }
 
-    // Get employee by ID
     @GetMapping("/{id}")
-    public ResponseEntity<User> getEmployeeById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getUserById(id));
-    }
-
-    // Update employee profile
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateEmployee(@PathVariable Long id, @RequestBody User updated) {
-        return ResponseEntity.ok(userService.updateUser(id, updated));
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+        return employeeRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

@@ -1,11 +1,9 @@
 package com.wams.service;
 
-import com.wams.model.Employee;
-import com.wams.model.Manager;
 import com.wams.model.ShiftTemplate;
-import com.wams.repository.EmployeeRepository;
-import com.wams.repository.ManagerRepository;
+import com.wams.model.User;
 import com.wams.repository.ShiftTemplateRepository;
+import com.wams.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,30 +13,21 @@ import java.util.List;
 public class ShiftTemplateService {
 
     @Autowired
-    private ShiftTemplateRepository templateRepo;
+    private ShiftTemplateRepository shiftTemplateRepository;
 
     @Autowired
-    private ManagerRepository managerRepo;
-
-    @Autowired
-    private EmployeeRepository employeeRepo;
+    private UserRepository userRepository;
 
     public ShiftTemplate createTemplate(Long managerId, ShiftTemplate template) {
-        Manager manager = managerRepo.findById(managerId).orElseThrow();
+        User manager = userRepository.findById(managerId)
+                .orElseThrow(() -> new RuntimeException("Manager not found"));
         template.setManager(manager);
-        return templateRepo.save(template);
+        return shiftTemplateRepository.save(template);
     }
 
     public List<ShiftTemplate> getTemplatesByManager(Long managerId) {
-        Manager manager = managerRepo.findById(managerId).orElseThrow();
-        return templateRepo.findByManager(manager);
-    }
-
-    public ShiftTemplate assignEmployeeToTemplate(Long templateId, Long employeeId) {
-        ShiftTemplate template = templateRepo.findById(templateId).orElseThrow();
-        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
-        template.getEmployees().add(employee);
-        return templateRepo.save(template);
+        User manager = userRepository.findById(managerId)
+                .orElseThrow(() -> new RuntimeException("Manager not found"));
+        return shiftTemplateRepository.findByManager(manager);
     }
 }
-

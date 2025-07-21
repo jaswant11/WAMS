@@ -1,0 +1,471 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.wams:wams-backend >------------------------
+[INFO] Building WAMS Backend 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ wams-backend ---
+[INFO] Deleting C:\PROJECT\WAMS\backend\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ wams-backend ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ wams-backend ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 40 source files with javac [debug release 17] to target\classes
+[INFO] Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[3,22] cannot find symbol
+  symbol:   class WorkLog
+  location: package com.wams.model
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[4,24] cannot find symbol
+  symbol:   class WorkLogService
+  location: package com.wams.service
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[16,13] cannot find symbol
+  symbol:   class WorkLogService
+  location: class com.wams.controller.WorklogController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[20,63] cannot find symbol
+  symbol:   class WorkLog
+  location: class com.wams.controller.WorklogController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[20,27] cannot find symbol
+  symbol:   class WorkLog
+  location: class com.wams.controller.WorklogController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[26,32] cannot find symbol
+  symbol:   class WorkLog
+  location: class com.wams.controller.WorklogController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[32,32] cannot find symbol
+  symbol:   class WorkLog
+  location: class com.wams.controller.WorklogController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[3,22] cannot find symbol
+  symbol:   class FatigueScore
+  location: package com.wams.model
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[20,27] cannot find symbol
+  symbol:   class FatigueScore
+  location: class com.wams.controller.FatigueController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[26,32] cannot find symbol
+  symbol:   class FatigueScore
+  location: class com.wams.controller.FatigueController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[32,68] cannot find symbol
+  symbol:   class FatigueScore
+  location: class com.wams.controller.FatigueController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[32,27] cannot find symbol
+  symbol:   class FatigueScore
+  location: class com.wams.controller.FatigueController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[3,22] cannot find symbol
+  symbol:   class TimeOffRequest
+  location: package com.wams.model
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[20,71] cannot find symbol
+  symbol:   class TimeOffRequest
+  location: class com.wams.controller.TimeOffController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[20,27] cannot find symbol
+  symbol:   class TimeOffRequest
+  location: class com.wams.controller.TimeOffController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[26,17] cannot find symbol
+  symbol:   class TimeOffRequest
+  location: class com.wams.controller.TimeOffController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[46,17] cannot find symbol
+  symbol:   class TimeOffRequest
+  location: class com.wams.controller.TimeOffController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/WorklogService.java:[28,66] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/WorklogService.java:[38,33] cannot find symbol
+  symbol:   method findByEmployeeId(java.lang.Long)
+  location: variable worklogRepository of type com.wams.repository.WorklogRepository
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/WorklogService.java:[42,33] cannot find symbol
+  symbol:   method findByEmployeeIdAndDate(java.lang.Long,java.time.LocalDate)
+  location: variable worklogRepository of type com.wams.repository.WorklogRepository
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/EmployeeController.java:[22,43] cannot find symbol
+  symbol:   method getAllUsers()
+  location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/EmployeeController.java:[31,45] cannot find symbol
+  symbol:   method getUserById(java.lang.Long)
+  location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/EmployeeController.java:[37,45] method updateUser in class com.wams.service.UserService cannot be applied to given types;
+  required: com.wams.model.User
+  found:    java.lang.Long,com.wams.model.User
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ShiftController.java:[44,21] cannot find symbol
+  symbol:   method processStaffingRequirement(java.lang.Long,int)
+  location: variable shiftService of type com.wams.service.ShiftService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[39,74] incompatible types: com.wams.model.User cannot be converted to com.wams.model.Employee
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[49,74] incompatible types: com.wams.model.User cannot be converted to com.wams.model.Employee
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[50,14] cannot find symbol
+  symbol:   method setEmployee(com.wams.model.Employee)
+  location: variable shift of type com.wams.model.Shift
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[56,68] cannot find symbol
+  symbol:   method getEmployee()
+  location: variable s of type com.wams.model.Shift
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[75,31] cannot find symbol
+  symbol:   method getEmployee()
+  location: variable s of type com.wams.model.Shift
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[76,83] cannot find symbol
+  symbol:   method getEmployee()
+  location: variable s of type com.wams.model.Shift
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[81,35] cannot find symbol
+  symbol:   method getEmployee()
+  location: variable shift of type com.wams.model.Shift
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[86,56] cannot find symbol
+  symbol:   method findByDate(java.time.LocalDate)
+  location: variable availabilityRepo of type com.wams.repository.AvailabilityRepository
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[90,64] cannot find symbol
+  symbol:   method getEmployee()
+  location: variable a of type com.wams.model.Availability
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[92,33] cannot find symbol
+  symbol:   method getEmployee()
+  location: variable a of type com.wams.model.Availability
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[110,13] cannot find symbol
+  symbol:   method setRead(boolean)
+  location: variable note of type com.wams.model.Notification
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/FatigueService.java:[23,74] incompatible types: com.wams.model.User cannot be converted to com.wams.model.Employee
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/FatigueService.java:[30,27] incompatible types: bad return type in method reference
+    double cannot be converted to int
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ShiftTemplateController.java:[21,54] cannot find symbol
+  symbol:   method createShiftTemplate(com.wams.model.ShiftTemplate)
+  location: variable shiftTemplateService of type com.wams.service.ShiftTemplateService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ShiftTemplateController.java:[27,36] cannot find symbol
+  symbol:   method getAllShiftTemplates()
+  location: variable shiftTemplateService of type com.wams.service.ShiftTemplateService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ShiftTemplateController.java:[33,54] cannot find symbol
+  symbol:   method getShiftTemplateById(java.lang.Long)
+  location: variable shiftTemplateService of type com.wams.service.ShiftTemplateService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ShiftTemplateController.java:[42,29] cannot find symbol
+  symbol:   method assignEmployeesToTemplate(java.lang.Long,java.util.List<java.lang.Long>)
+  location: variable shiftTemplateService of type com.wams.service.ShiftTemplateService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftTemplateService.java:[28,17] cannot find symbol
+  symbol:   method setManager(com.wams.model.Manager)
+  location: variable template of type com.wams.model.ShiftTemplate
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftTemplateService.java:[39,74] incompatible types: com.wams.model.User cannot be converted to com.wams.model.Employee
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftTemplateService.java:[40,17] cannot find symbol
+  symbol:   method getEmployees()
+  location: variable template of type com.wams.model.ShiftTemplate
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[23,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[28,25] cannot find symbol
+  symbol:   method setRead(boolean)
+  location: variable notification of type com.wams.model.Notification
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[29,66] incompatible types: java.time.LocalDateTime cannot be converted to java.lang.String
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[36,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[44,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[48,18] cannot find symbol
+  symbol:   method setRead(boolean)
+  location: variable n of type com.wams.model.Notification
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AvailabilityController.java:[21,49] cannot find symbol
+  symbol:   method saveAvailability(com.wams.model.Availability)
+  location: variable availabilityService of type com.wams.service.AvailabilityService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AvailabilityController.java:[35,53] cannot find symbol
+  symbol:   method getAllAvailability()
+  location: variable availabilityService of type com.wams.service.AvailabilityService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[24,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[26,25] cannot find symbol
+  symbol:   method setEmployee(com.wams.model.Employee)
+  location: variable availability of type com.wams.model.Availability
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[33,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[35,42] cannot find symbol
+  symbol:   method findByEmployee(com.wams.model.Employee)
+  location: variable availabilityRepository of type com.wams.repository.AvailabilityRepository
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[41,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[51,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/NotificationController.java:[21,53] method sendNotification in class com.wams.service.NotificationService cannot be applied to given types;
+  required: java.lang.Long,java.lang.String
+  found:    com.wams.model.Notification
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/NotificationController.java:[27,53] cannot find symbol
+  symbol:   method getNotificationsForUser(java.lang.Long)
+  location: variable notificationService of type com.wams.service.NotificationService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/TimeOffService.java:[24,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/TimeOffService.java:[26,20] cannot find symbol
+  symbol:   method setEmployee(com.wams.model.Employee)
+  location: variable timeOff of type com.wams.model.TimeOff
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/TimeOffService.java:[33,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/TimeOffService.java:[41,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/EmployeeService.java:[31,41] cannot find symbol
+  symbol:   method getName()
+  location: variable updatedEmployee of type com.wams.model.User
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/EmployeeService.java:[32,42] cannot find symbol
+  symbol:   method getEmail()
+  location: variable updatedEmployee of type com.wams.model.User
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ManagerController.java:[22,42] cannot find symbol
+  symbol:   method getAllUsers()
+  location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ManagerController.java:[31,45] cannot find symbol
+  symbol:   method getUserById(java.lang.Long)
+  location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ManagerController.java:[37,45] method updateUser in class com.wams.service.UserService cannot be applied to given types;
+  required: com.wams.model.User
+  found:    java.lang.Long,com.wams.model.User
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/UserController.java:[21,27] cannot find symbol
+  symbol:   method getAllUsers()
+  location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/UserController.java:[27,45] cannot find symbol
+  symbol:   method getUserById(java.lang.Long)
+  location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/UserController.java:[33,45] method updateUser in class com.wams.service.UserService cannot be applied to given types;
+  required: com.wams.model.User
+  found:    java.lang.Long,com.wams.model.User
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[21,48] cannot find symbol
+  symbol:   method getFatigueScoreByEmployeeId(java.lang.Long)
+  location: variable fatigueService of type com.wams.service.FatigueService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[27,48] cannot find symbol
+  symbol:   method getAllFatigueScores()
+  location: variable fatigueService of type com.wams.service.FatigueService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[27,30] cannot find symbol
+  symbol:   method getPendingRequests()
+  location: variable timeOffService of type com.wams.service.TimeOffService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[33,23] cannot find symbol
+  symbol:   method approveRequest(java.lang.Long)
+  location: variable timeOffService of type com.wams.service.TimeOffService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[40,23] cannot find symbol
+  symbol:   method denyRequest(java.lang.Long)
+  location: variable timeOffService of type com.wams.service.TimeOffService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[47,30] cannot find symbol
+  symbol:   method getRequestsByEmployee(java.lang.Long)
+  location: variable timeOffService of type com.wams.service.TimeOffService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AdminController.java:[21,20] cannot find symbol
+  symbol:   method createUser(com.wams.model.User)
+  location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AdminController.java:[28,45] cannot find symbol
+  symbol:   method getAllUsers()
+  location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AdminController.java:[41,20] cannot find symbol
+  symbol:   method updateUserRole(java.lang.Long,java.lang.String)
+  location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AuthController.java:[19,71] cannot find symbol
+  symbol:   method getEmail()
+  location: variable loginRequest of type com.wams.model.User
+[INFO] 82 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.277 s
+[INFO] Finished at: 2025-07-20T21:27:53-08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project wams-backend: Compilation failure: Compilation failure: 
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[3,22] cannot find symbol
+[ERROR]   symbol:   class WorkLog
+[ERROR]   location: package com.wams.model
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[4,24] cannot find symbol
+[ERROR]   symbol:   class WorkLogService
+[ERROR]   location: package com.wams.service
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[16,13] cannot find symbol
+[ERROR]   symbol:   class WorkLogService
+[ERROR]   location: class com.wams.controller.WorklogController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[20,63] cannot find symbol
+[ERROR]   symbol:   class WorkLog
+[ERROR]   location: class com.wams.controller.WorklogController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[20,27] cannot find symbol
+[ERROR]   symbol:   class WorkLog
+[ERROR]   location: class com.wams.controller.WorklogController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[26,32] cannot find symbol
+[ERROR]   symbol:   class WorkLog
+[ERROR]   location: class com.wams.controller.WorklogController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/WorklogController.java:[32,32] cannot find symbol
+[ERROR]   symbol:   class WorkLog
+[ERROR]   location: class com.wams.controller.WorklogController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[3,22] cannot find symbol
+[ERROR]   symbol:   class FatigueScore
+[ERROR]   location: package com.wams.model
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[20,27] cannot find symbol
+[ERROR]   symbol:   class FatigueScore
+[ERROR]   location: class com.wams.controller.FatigueController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[26,32] cannot find symbol
+[ERROR]   symbol:   class FatigueScore
+[ERROR]   location: class com.wams.controller.FatigueController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[32,68] cannot find symbol
+[ERROR]   symbol:   class FatigueScore
+[ERROR]   location: class com.wams.controller.FatigueController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[32,27] cannot find symbol
+[ERROR]   symbol:   class FatigueScore
+[ERROR]   location: class com.wams.controller.FatigueController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[3,22] cannot find symbol
+[ERROR]   symbol:   class TimeOffRequest
+[ERROR]   location: package com.wams.model
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[20,71] cannot find symbol
+[ERROR]   symbol:   class TimeOffRequest
+[ERROR]   location: class com.wams.controller.TimeOffController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[20,27] cannot find symbol
+[ERROR]   symbol:   class TimeOffRequest
+[ERROR]   location: class com.wams.controller.TimeOffController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[26,17] cannot find symbol
+[ERROR]   symbol:   class TimeOffRequest
+[ERROR]   location: class com.wams.controller.TimeOffController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[46,17] cannot find symbol
+[ERROR]   symbol:   class TimeOffRequest
+[ERROR]   location: class com.wams.controller.TimeOffController
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/WorklogService.java:[28,66] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/WorklogService.java:[38,33] cannot find symbol
+[ERROR]   symbol:   method findByEmployeeId(java.lang.Long)
+[ERROR]   location: variable worklogRepository of type com.wams.repository.WorklogRepository
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/WorklogService.java:[42,33] cannot find symbol
+[ERROR]   symbol:   method findByEmployeeIdAndDate(java.lang.Long,java.time.LocalDate)
+[ERROR]   location: variable worklogRepository of type com.wams.repository.WorklogRepository
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/EmployeeController.java:[22,43] cannot find symbol
+[ERROR]   symbol:   method getAllUsers()
+[ERROR]   location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/EmployeeController.java:[31,45] cannot find symbol
+[ERROR]   symbol:   method getUserById(java.lang.Long)
+[ERROR]   location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/EmployeeController.java:[37,45] method updateUser in class com.wams.service.UserService cannot be applied to given types;
+[ERROR]   required: com.wams.model.User
+[ERROR]   found:    java.lang.Long,com.wams.model.User
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ShiftController.java:[44,21] cannot find symbol
+[ERROR]   symbol:   method processStaffingRequirement(java.lang.Long,int)
+[ERROR]   location: variable shiftService of type com.wams.service.ShiftService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[39,74] incompatible types: com.wams.model.User cannot be converted to com.wams.model.Employee
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[49,74] incompatible types: com.wams.model.User cannot be converted to com.wams.model.Employee
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[50,14] cannot find symbol
+[ERROR]   symbol:   method setEmployee(com.wams.model.Employee)
+[ERROR]   location: variable shift of type com.wams.model.Shift
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[56,68] cannot find symbol
+[ERROR]   symbol:   method getEmployee()
+[ERROR]   location: variable s of type com.wams.model.Shift
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[75,31] cannot find symbol
+[ERROR]   symbol:   method getEmployee()
+[ERROR]   location: variable s of type com.wams.model.Shift
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[76,83] cannot find symbol
+[ERROR]   symbol:   method getEmployee()
+[ERROR]   location: variable s of type com.wams.model.Shift
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[81,35] cannot find symbol
+[ERROR]   symbol:   method getEmployee()
+[ERROR]   location: variable shift of type com.wams.model.Shift
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[86,56] cannot find symbol
+[ERROR]   symbol:   method findByDate(java.time.LocalDate)
+[ERROR]   location: variable availabilityRepo of type com.wams.repository.AvailabilityRepository
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[90,64] cannot find symbol
+[ERROR]   symbol:   method getEmployee()
+[ERROR]   location: variable a of type com.wams.model.Availability
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[92,33] cannot find symbol
+[ERROR]   symbol:   method getEmployee()
+[ERROR]   location: variable a of type com.wams.model.Availability
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftService.java:[110,13] cannot find symbol
+[ERROR]   symbol:   method setRead(boolean)
+[ERROR]   location: variable note of type com.wams.model.Notification
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/FatigueService.java:[23,74] incompatible types: com.wams.model.User cannot be converted to com.wams.model.Employee
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/FatigueService.java:[30,27] incompatible types: bad return type in method reference
+[ERROR]     double cannot be converted to int
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ShiftTemplateController.java:[21,54] cannot find symbol
+[ERROR]   symbol:   method createShiftTemplate(com.wams.model.ShiftTemplate)
+[ERROR]   location: variable shiftTemplateService of type com.wams.service.ShiftTemplateService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ShiftTemplateController.java:[27,36] cannot find symbol
+[ERROR]   symbol:   method getAllShiftTemplates()
+[ERROR]   location: variable shiftTemplateService of type com.wams.service.ShiftTemplateService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ShiftTemplateController.java:[33,54] cannot find symbol
+[ERROR]   symbol:   method getShiftTemplateById(java.lang.Long)
+[ERROR]   location: variable shiftTemplateService of type com.wams.service.ShiftTemplateService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ShiftTemplateController.java:[42,29] cannot find symbol
+[ERROR]   symbol:   method assignEmployeesToTemplate(java.lang.Long,java.util.List<java.lang.Long>)
+[ERROR]   location: variable shiftTemplateService of type com.wams.service.ShiftTemplateService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftTemplateService.java:[28,17] cannot find symbol
+[ERROR]   symbol:   method setManager(com.wams.model.Manager)
+[ERROR]   location: variable template of type com.wams.model.ShiftTemplate
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftTemplateService.java:[39,74] incompatible types: com.wams.model.User cannot be converted to com.wams.model.Employee
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/ShiftTemplateService.java:[40,17] cannot find symbol
+[ERROR]   symbol:   method getEmployees()
+[ERROR]   location: variable template of type com.wams.model.ShiftTemplate
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[23,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[28,25] cannot find symbol
+[ERROR]   symbol:   method setRead(boolean)
+[ERROR]   location: variable notification of type com.wams.model.Notification
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[29,66] incompatible types: java.time.LocalDateTime cannot be converted to java.lang.String
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[36,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[44,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/NotificationService.java:[48,18] cannot find symbol
+[ERROR]   symbol:   method setRead(boolean)
+[ERROR]   location: variable n of type com.wams.model.Notification
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AvailabilityController.java:[21,49] cannot find symbol
+[ERROR]   symbol:   method saveAvailability(com.wams.model.Availability)
+[ERROR]   location: variable availabilityService of type com.wams.service.AvailabilityService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AvailabilityController.java:[35,53] cannot find symbol
+[ERROR]   symbol:   method getAllAvailability()
+[ERROR]   location: variable availabilityService of type com.wams.service.AvailabilityService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[24,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[26,25] cannot find symbol
+[ERROR]   symbol:   method setEmployee(com.wams.model.Employee)
+[ERROR]   location: variable availability of type com.wams.model.Availability
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[33,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[35,42] cannot find symbol
+[ERROR]   symbol:   method findByEmployee(com.wams.model.Employee)
+[ERROR]   location: variable availabilityRepository of type com.wams.repository.AvailabilityRepository
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[41,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/AvailabilityService.java:[51,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/NotificationController.java:[21,53] method sendNotification in class com.wams.service.NotificationService cannot be applied to given types;
+[ERROR]   required: java.lang.Long,java.lang.String
+[ERROR]   found:    com.wams.model.Notification
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/NotificationController.java:[27,53] cannot find symbol
+[ERROR]   symbol:   method getNotificationsForUser(java.lang.Long)
+[ERROR]   location: variable notificationService of type com.wams.service.NotificationService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/TimeOffService.java:[24,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/TimeOffService.java:[26,20] cannot find symbol
+[ERROR]   symbol:   method setEmployee(com.wams.model.Employee)
+[ERROR]   location: variable timeOff of type com.wams.model.TimeOff
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/TimeOffService.java:[33,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/TimeOffService.java:[41,69] incompatible types: java.util.Optional<com.wams.model.User> cannot be converted to java.util.Optional<com.wams.model.Employee>
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/EmployeeService.java:[31,41] cannot find symbol
+[ERROR]   symbol:   method getName()
+[ERROR]   location: variable updatedEmployee of type com.wams.model.User
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/service/EmployeeService.java:[32,42] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable updatedEmployee of type com.wams.model.User
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ManagerController.java:[22,42] cannot find symbol
+[ERROR]   symbol:   method getAllUsers()
+[ERROR]   location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ManagerController.java:[31,45] cannot find symbol
+[ERROR]   symbol:   method getUserById(java.lang.Long)
+[ERROR]   location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/ManagerController.java:[37,45] method updateUser in class com.wams.service.UserService cannot be applied to given types;
+[ERROR]   required: com.wams.model.User
+[ERROR]   found:    java.lang.Long,com.wams.model.User
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/UserController.java:[21,27] cannot find symbol
+[ERROR]   symbol:   method getAllUsers()
+[ERROR]   location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/UserController.java:[27,45] cannot find symbol
+[ERROR]   symbol:   method getUserById(java.lang.Long)
+[ERROR]   location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/UserController.java:[33,45] method updateUser in class com.wams.service.UserService cannot be applied to given types;
+[ERROR]   required: com.wams.model.User
+[ERROR]   found:    java.lang.Long,com.wams.model.User
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[21,48] cannot find symbol
+[ERROR]   symbol:   method getFatigueScoreByEmployeeId(java.lang.Long)
+[ERROR]   location: variable fatigueService of type com.wams.service.FatigueService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/FatigueController.java:[27,48] cannot find symbol
+[ERROR]   symbol:   method getAllFatigueScores()
+[ERROR]   location: variable fatigueService of type com.wams.service.FatigueService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[27,30] cannot find symbol
+[ERROR]   symbol:   method getPendingRequests()
+[ERROR]   location: variable timeOffService of type com.wams.service.TimeOffService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[33,23] cannot find symbol
+[ERROR]   symbol:   method approveRequest(java.lang.Long)
+[ERROR]   location: variable timeOffService of type com.wams.service.TimeOffService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[40,23] cannot find symbol
+[ERROR]   symbol:   method denyRequest(java.lang.Long)
+[ERROR]   location: variable timeOffService of type com.wams.service.TimeOffService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/TimeOffController.java:[47,30] cannot find symbol
+[ERROR]   symbol:   method getRequestsByEmployee(java.lang.Long)
+[ERROR]   location: variable timeOffService of type com.wams.service.TimeOffService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AdminController.java:[21,20] cannot find symbol
+[ERROR]   symbol:   method createUser(com.wams.model.User)
+[ERROR]   location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AdminController.java:[28,45] cannot find symbol
+[ERROR]   symbol:   method getAllUsers()
+[ERROR]   location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AdminController.java:[41,20] cannot find symbol
+[ERROR]   symbol:   method updateUserRole(java.lang.Long,java.lang.String)
+[ERROR]   location: variable userService of type com.wams.service.UserService
+[ERROR] /C:/PROJECT/WAMS/backend/src/main/java/com/wams/controller/AuthController.java:[19,71] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable loginRequest of type com.wams.model.User
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

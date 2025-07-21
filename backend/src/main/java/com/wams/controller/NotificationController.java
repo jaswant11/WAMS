@@ -15,19 +15,18 @@ public class NotificationController {
     @Autowired
     private NotificationService notificationService;
 
-    // Send a new notification to a user
-    @PostMapping("/send")
-    public ResponseEntity<Notification> sendNotification(@RequestBody Notification notification) {
-        return ResponseEntity.ok(notificationService.sendNotification(notification));
+    @PostMapping("/send/{userId}")
+    public ResponseEntity<Notification> sendNotification(
+            @PathVariable Long userId,
+            @RequestBody String message) {
+        return ResponseEntity.ok(notificationService.sendNotification(userId, message));
     }
 
-    // Get all notifications for a user
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Notification>> getNotificationsForUser(@PathVariable Long userId) {
         return ResponseEntity.ok(notificationService.getNotificationsForUser(userId));
     }
 
-    // Optional: Mark all as read
     @PutMapping("/user/{userId}/mark-read")
     public ResponseEntity<String> markAllAsRead(@PathVariable Long userId) {
         notificationService.markAllAsRead(userId);

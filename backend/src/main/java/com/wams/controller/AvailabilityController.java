@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -15,23 +16,23 @@ public class AvailabilityController {
     @Autowired
     private AvailabilityService availabilityService;
 
-    // Employee submits availability
-    @PostMapping("/submit")
-    public ResponseEntity<Availability> submitAvailability(@RequestBody Availability availability) {
-        Availability saved = availabilityService.saveAvailability(availability);
-        return ResponseEntity.ok(saved);
+    @PostMapping("/submit/{userId}")
+    public ResponseEntity<Availability> submitAvailability(
+            @PathVariable Long userId,
+            @RequestBody Availability availability) {
+        return ResponseEntity.ok(availabilityService.submitAvailability(userId, availability));
     }
 
-    // Get availability by employee ID
-    @GetMapping("/employee/{employeeId}")
-    public ResponseEntity<List<Availability>> getAvailabilityByEmployee(@PathVariable Long employeeId) {
-        List<Availability> result = availabilityService.getAvailabilityByEmployee(employeeId);
-        return ResponseEntity.ok(result);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Availability>> getAvailabilityByUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(availabilityService.getAvailabilityByUser(userId));
     }
 
-    // Admin/Manager gets all availability
-    @GetMapping("/all")
-    public ResponseEntity<List<Availability>> getAllAvailability() {
-        return ResponseEntity.ok(availabilityService.getAllAvailability());
+    @GetMapping("/user/{userId}/date/{date}")
+    public ResponseEntity<Boolean> isAvailableOnDate(
+            @PathVariable Long userId,
+            @PathVariable String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return ResponseEntity.ok(availabilityService.isAvailableOnDate(userId, localDate));
     }
 }

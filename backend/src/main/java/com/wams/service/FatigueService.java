@@ -1,8 +1,8 @@
 package com.wams.service;
 
-import com.wams.model.Employee;
+import com.wams.model.User;
 import com.wams.model.Worklog;
-import com.wams.repository.EmployeeRepository;
+import com.wams.repository.UserRepository;
 import com.wams.repository.WorklogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,23 +14,23 @@ import java.util.List;
 public class FatigueService {
 
     @Autowired
-    private EmployeeRepository employeeRepo;
+    private WorklogRepository worklogRepository;
 
     @Autowired
-    private WorklogRepository worklogRepo;
+    private UserRepository userRepository;
 
-    public int getFatigueScore(Long employeeId) {
-        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
+    // Returns a fatigue score (0 = fresh, 100 = max fatigue) based on hours worked in last 7 days
+    public int getFatigueScore(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Last 7 days work logs
         LocalDate now = LocalDate.now();
-        List<Worklog> logs = worklogRepo.findByEmployeeAndDateBetween(employee, now.minusDays(7), now);
+        LocalDate weekAgo = now.minusDays(7);
 
-        int totalHours = logs.stream()
-                .mapToInt(Worklog::getHoursWorked)
-                .sum();
+        List<Worklog> logs = worklogRepository.findByEmployeeAndDateBetween(user, weekAgo, now);
 
-        // Simple fatigue calculation
+        int totalHours = logs.size() * 8; // Adjust as needed, or sum actual hours from worklog fields
+
         if (totalHours >= 60) return 100;
         if (totalHours >= 50) return 90;
         if (totalHours >= 40) return 75;

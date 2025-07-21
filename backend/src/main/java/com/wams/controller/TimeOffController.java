@@ -1,6 +1,6 @@
 package com.wams.controller;
 
-import com.wams.model.TimeOffRequest;
+import com.wams.model.TimeOff;
 import com.wams.service.TimeOffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,35 +15,15 @@ public class TimeOffController {
     @Autowired
     private TimeOffService timeOffService;
 
-    // Employee submits a time-off request
-    @PostMapping("/request")
-    public ResponseEntity<TimeOffRequest> requestTimeOff(@RequestBody TimeOffRequest request) {
-        return ResponseEntity.ok(timeOffService.submitRequest(request));
+    @PostMapping("/request/{userId}")
+    public ResponseEntity<TimeOff> requestTimeOff(
+            @PathVariable Long userId,
+            @RequestBody TimeOff timeOff) {
+        return ResponseEntity.ok(timeOffService.requestTimeOff(userId, timeOff));
     }
 
-    // Manager/Admin gets all pending requests
-    @GetMapping("/pending")
-    public List<TimeOffRequest> getAllPendingRequests() {
-        return timeOffService.getPendingRequests();
-    }
-
-    // Manager approves a request
-    @PutMapping("/approve/{requestId}")
-    public ResponseEntity<String> approve(@PathVariable Long requestId) {
-        timeOffService.approveRequest(requestId);
-        return ResponseEntity.ok("Time-off request approved.");
-    }
-
-    // Manager denies a request
-    @PutMapping("/deny/{requestId}")
-    public ResponseEntity<String> deny(@PathVariable Long requestId) {
-        timeOffService.denyRequest(requestId);
-        return ResponseEntity.ok("Time-off request denied.");
-    }
-
-    // Get all requests by employee ID
-    @GetMapping("/employee/{employeeId}")
-    public List<TimeOffRequest> getRequestsByEmployee(@PathVariable Long employeeId) {
-        return timeOffService.getRequestsByEmployee(employeeId);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<TimeOff>> getTimeOffsByUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(timeOffService.getTimeOffsByUser(userId));
     }
 }

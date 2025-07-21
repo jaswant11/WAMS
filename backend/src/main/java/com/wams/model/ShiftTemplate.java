@@ -2,41 +2,36 @@ package com.wams.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalTime;
+
 @Entity
+@Table(name = "shift_templates")
 public class ShiftTemplate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String roleTitle;
-    private String startTime;
-    private String endTime;
-
-    private int defaultRequiredEmployees;
+    private String dayOfWeek; // e.g. "MONDAY", "TUESDAY", etc.
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private int requiredEmployees;
 
     @ManyToOne
     @JoinColumn(name = "manager_id")
-    private Manager createdBy;
+    private User manager;
 
-    // Getters and Setters
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
-    public String getRoleTitle() { return roleTitle; }
-    public void setRoleTitle(String roleTitle) { this.roleTitle = roleTitle; }
-
-    public String getStartTime() { return startTime; }
-    public void setStartTime(String startTime) { this.startTime = startTime; }
-
-    public String getEndTime() { return endTime; }
-    public void setEndTime(String endTime) { this.endTime = endTime; }
-
-    public int getDefaultRequiredEmployees() { return defaultRequiredEmployees; }
-    public void setDefaultRequiredEmployees(int defaultRequiredEmployees) {
-        this.defaultRequiredEmployees = defaultRequiredEmployees;
-    }
-
-    public Manager getCreatedBy() { return createdBy; }
-    public void setCreatedBy(Manager createdBy) { this.createdBy = createdBy; }
+    public String getDayOfWeek() { return dayOfWeek; }
+    public void setDayOfWeek(String dayOfWeek) { this.dayOfWeek = dayOfWeek; }
+    public LocalTime getStartTime() { return startTime; }
+    public void setStartTime(LocalTime startTime) { this.startTime = startTime; }
+    public LocalTime getEndTime() { return endTime; }
+    public void setEndTime(LocalTime endTime) { this.endTime = endTime; }
+    public int getRequiredEmployees() { return requiredEmployees; }
+    public void setRequiredEmployees(int requiredEmployees) { this.requiredEmployees = requiredEmployees; }
+    public User getManager() { return manager; }
+    public void setManager(User manager) { this.manager = manager; }
 }

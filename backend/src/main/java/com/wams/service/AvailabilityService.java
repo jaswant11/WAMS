@@ -1,9 +1,9 @@
 package com.wams.service;
 
 import com.wams.model.Availability;
-import com.wams.model.Employee;
+import com.wams.model.User;
 import com.wams.repository.AvailabilityRepository;
-import com.wams.repository.EmployeeRepository;
+import com.wams.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,40 +18,32 @@ public class AvailabilityService {
     private AvailabilityRepository availabilityRepository;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private UserRepository userRepository;
 
-    public Availability submitAvailability(Long employeeId, Availability availability) {
-        Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
-        if (employeeOpt.isPresent()) {
-            availability.setEmployee(employeeOpt.get());
+    public Availability submitAvailability(Long userId, Availability availability) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            availability.setEmployee(userOpt.get());
             return availabilityRepository.save(availability);
         }
-        throw new RuntimeException("Employee not found with ID: " + employeeId);
+        throw new RuntimeException("User not found with ID: " + userId);
     }
 
-    public List<Availability> getAvailabilityByEmployee(Long employeeId) {
-        Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
-        if (employeeOpt.isPresent()) {
-            return availabilityRepository.findByEmployee(employeeOpt.get());
-        }
-        throw new RuntimeException("Employee not found with ID: " + employeeId);
+    public List<Availability> getAvailabilityByUser(Long userId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        return userOpt.map(availabilityRepository::findByEmployee)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public boolean isAvailableOnDate(Long employeeId, LocalDate date) {
-        Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
-        if (employeeOpt.isPresent()) {
-            List<Availability> availabilities = availabilityRepository
-                .findByEmployeeAndDate(employeeOpt.get(), date);
-            return !availabilities.isEmpty();
-        }
-        return false;
+    public boolean isAvailableOnDate(Long userId, LocalDate date) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        return userOpt.map(user -> !availabilityRepository.findByEmployeeAndDate(user, date).isEmpty())
+                .orElse(false);
     }
 
-    public List<Availability> getAvailabilityBetween(Long employeeId, LocalDate start, LocalDate end) {
-        Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
-        if (employeeOpt.isPresent()) {
-            return availabilityRepository.findByEmployeeAndDateBetween(employeeOpt.get(), start, end);
-        }
-        throw new RuntimeException("Employee not found with ID: " + employeeId);
+    public List<Availability> getAvailabilityBetween(Long userId, LocalDate start, LocalDate end) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        return userOpt.map(user -> availabilityRepository.findByEmployeeAndDateBetween(user, start, end))
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

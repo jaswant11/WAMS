@@ -1,11 +1,12 @@
 package com.wams.controller;
 
-import com.wams.model.WorkLog;
-import com.wams.service.WorkLogService;
+import com.wams.model.Worklog;
+import com.wams.service.WorklogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -13,30 +14,27 @@ import java.util.List;
 public class WorklogController {
 
     @Autowired
-    private WorkLogService workLogService;
+    private WorklogService worklogService;
 
-    // Employee submits a worklog
-    @PostMapping("/submit")
-    public ResponseEntity<WorkLog> submitWorkLog(@RequestBody WorkLog log) {
-        return ResponseEntity.ok(workLogService.saveWorkLog(log));
+    @PostMapping("/submit/{userId}")
+    public ResponseEntity<Worklog> addWorklog(
+            @PathVariable Long userId,
+            @RequestBody Worklog worklog) {
+        return ResponseEntity.ok(worklogService.addWorklog(userId, worklog));
     }
 
-    // Get all worklogs for an employee
-    @GetMapping("/employee/{userId}")
-    public ResponseEntity<List<WorkLog>> getLogsByEmployee(@PathVariable Long userId) {
-        return ResponseEntity.ok(workLogService.getWorkLogsByUser(userId));
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Worklog>> getWorklogsByUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(worklogService.getWorklogsByUser(userId));
     }
 
-    // Admin/Manager: Get all logs
-    @GetMapping("/all")
-    public ResponseEntity<List<WorkLog>> getAllLogs() {
-        return ResponseEntity.ok(workLogService.getAllWorkLogs());
-    }
-
-    // Optional: Delete a worklog by ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteLog(@PathVariable Long id) {
-        workLogService.deleteWorkLog(id);
-        return ResponseEntity.ok("Worklog deleted.");
+    @GetMapping("/user/{userId}/range")
+    public ResponseEntity<List<Worklog>> getWorklogsByUserBetweenDates(
+            @PathVariable Long userId,
+            @RequestParam String start,
+            @RequestParam String end) {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        return ResponseEntity.ok(worklogService.getWorklogsByUserBetweenDates(userId, startDate, endDate));
     }
 }

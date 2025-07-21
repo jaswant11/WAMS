@@ -1,6 +1,6 @@
 package com.wams.service;
 
-import com.wams.model.User;
+import com.wams.model.Employee;
 import com.wams.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,27 +13,19 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    // Get all employees
-    public List<User> getAllEmployees() {
-        return employeeRepository.findByRole("employee");
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
     }
 
-    // Get one employee by ID
-    public User getEmployeeById(Long id) {
-        return employeeRepository.findById(id).orElse(null);
+    public Employee getEmployeeById(Long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found with ID: " + id));
     }
 
-    // Update an employee
-    public User updateEmployee(Long id, User updatedEmployee) {
-        User existing = getEmployeeById(id);
-        if (existing == null) return null;
-
-        existing.setName(updatedEmployee.getName());
-        existing.setEmail(updatedEmployee.getEmail());
-        existing.setPassword(updatedEmployee.getPassword());
-        existing.setRole("employee"); // ensure role remains "employee"
-
-        return employeeRepository.save(existing);
+    public Employee updateEmployee(Long id, Employee updated) {
+        Employee emp = getEmployeeById(id);
+        emp.setUser(updated.getUser());
+        // Add any custom field updates here
+        return employeeRepository.save(emp);
     }
 }
-

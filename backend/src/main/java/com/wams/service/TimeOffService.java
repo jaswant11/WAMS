@@ -1,9 +1,9 @@
 package com.wams.service;
 
-import com.wams.model.Employee;
 import com.wams.model.TimeOff;
-import com.wams.repository.EmployeeRepository;
+import com.wams.model.User;
 import com.wams.repository.TimeOffRepository;
+import com.wams.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,30 +18,30 @@ public class TimeOffService {
     private TimeOffRepository timeOffRepository;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private UserRepository userRepository;
 
-    public TimeOff requestTimeOff(Long employeeId, TimeOff timeOff) {
-        Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
-        if (employeeOpt.isPresent()) {
-            timeOff.setEmployee(employeeOpt.get());
+    public TimeOff requestTimeOff(Long userId, TimeOff timeOff) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            timeOff.setEmployee(user.get());
             return timeOffRepository.save(timeOff);
         }
-        throw new RuntimeException("Employee not found with ID: " + employeeId);
+        throw new RuntimeException("User not found");
     }
 
-    public List<TimeOff> getTimeOffsByEmployee(Long employeeId) {
-        Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
-        if (employeeOpt.isPresent()) {
-            return timeOffRepository.findByEmployee(employeeOpt.get());
+    public List<TimeOff> getTimeOffsByUser(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            return timeOffRepository.findByEmployee(user.get());
         }
-        throw new RuntimeException("Employee not found with ID: " + employeeId);
+        throw new RuntimeException("User not found");
     }
 
-    public boolean hasTimeOffOnDate(Long employeeId, LocalDate date) {
-        Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
-        if (employeeOpt.isPresent()) {
+    public boolean hasTimeOffOnDate(Long userId, LocalDate date) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
             List<TimeOff> timeOffs = timeOffRepository
-                .findByEmployeeAndStartDateLessThanEqualAndEndDateGreaterThanEqual(employeeOpt.get(), date, date);
+                .findByEmployeeAndStartDateLessThanEqualAndEndDateGreaterThanEqual(user.get(), date, date);
             return !timeOffs.isEmpty();
         }
         return false;

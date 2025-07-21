@@ -1,9 +1,9 @@
 package com.wams.service;
 
 import com.wams.model.Worklog;
-import com.wams.model.Employee;
+import com.wams.model.User;
 import com.wams.repository.WorklogRepository;
-import com.wams.repository.EmployeeRepository;
+import com.wams.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,31 +18,26 @@ public class WorklogService {
     private WorklogRepository worklogRepository;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private UserRepository userRepository;
 
-    public List<Worklog> getAllWorklogs() {
-        return worklogRepository.findAll();
-    }
-
-    public Worklog addWorklog(Long employeeId, Worklog worklog) {
-        Optional<Employee> employee = employeeRepository.findById(employeeId);
-        if (employee.isPresent()) {
-            worklog.setEmployee(employee.get());
+    public Worklog addWorklog(Long userId, Worklog worklog) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            worklog.setEmployee(userOpt.get());
             return worklogRepository.save(worklog);
-        } else {
-            throw new RuntimeException("Employee not found with ID: " + employeeId);
         }
+        throw new RuntimeException("User not found");
     }
 
-    public List<Worklog> getWorklogsByEmployee(Long employeeId) {
-        return worklogRepository.findByEmployeeId(employeeId);
+    public List<Worklog> getWorklogsByUser(Long userId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        return userOpt.map(worklogRepository::findByEmployee)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public List<Worklog> getWorklogsByEmployeeAndDate(Long employeeId, LocalDate date) {
-        return worklogRepository.findByEmployeeIdAndDate(employeeId, date);
-    }
-
-    public void deleteWorklog(Long id) {
-        worklogRepository.deleteById(id);
+    public List<Worklog> getWorklogsByUserBetweenDates(Long userId, LocalDate start, LocalDate end) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        return userOpt.map(user -> worklogRepository.findByEmployeeAndDateBetween(user, start, end))
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

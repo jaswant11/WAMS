@@ -32,16 +32,8 @@ public class ShiftController {
 
     @PostMapping("/{shiftId}/assign/{userId}")
     public ResponseEntity<Shift> assignShift(
-            @PathVariable Long shiftId,
-            @PathVariable Long userId) {
+        @PathVariable Long shiftId,
+        @PathVariable Long userId) {
         return ResponseEntity.ok(shiftService.assignShift(shiftId, userId));
-    }
-
-    @PostMapping("/{shiftId}/requirement")
-    public ResponseEntity<String> updateStaffingRequirement(
-            @PathVariable Long shiftId,
-            @RequestParam int requiredStaff) {
-        shiftService.processStaffingRequirement(shiftId, requiredStaff);
-        return ResponseEntity.ok("Staffing requirement processed.");
     }
 }

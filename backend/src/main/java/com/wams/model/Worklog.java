@@ -2,37 +2,38 @@ package com.wams.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Entity
+@Table(name = "worklogs")
 public class Worklog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String date;         // Format: YYYY-MM-DD
-    private double hoursWorked;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private String taskDescription;
 
     @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+    @JoinColumn(name = "user_id")
+    private User employee;
 
-    @ManyToOne
-    @JoinColumn(name = "shift_id")
-    private Shift shift;
-
-    // Getters and Setters
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
-    public String getDate() { return date; }
-    public void setDate(String date) { this.date = date; }
-
-    public double getHoursWorked() { return hoursWorked; }
-    public void setHoursWorked(double hoursWorked) { this.hoursWorked = hoursWorked; }
-
-    public Employee getEmployee() { return employee; }
-    public void setEmployee(Employee employee) { this.employee = employee; }
-
-    public Shift getShift() { return shift; }
-    public void setShift(Shift shift) { this.shift = shift; }
+    public LocalDate getDate() { return date; }
+    public void setDate(LocalDate date) { this.date = date; }
+    public LocalTime getStartTime() { return startTime; }
+    public void setStartTime(LocalTime startTime) { this.startTime = startTime; }
+    public LocalTime getEndTime() { return endTime; }
+    public void setEndTime(LocalTime endTime) { this.endTime = endTime; }
+    public String getTaskDescription() { return taskDescription; }
+    public void setTaskDescription(String taskDescription) { this.taskDescription = taskDescription; }
+    public User getEmployee() { return employee; }
+    public void setEmployee(User employee) { this.employee = employee; }
 }
+

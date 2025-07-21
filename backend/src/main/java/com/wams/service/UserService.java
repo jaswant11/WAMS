@@ -5,35 +5,43 @@ import com.wams.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepository userRepo;
+    private UserRepository userRepository;
 
-    public User registerUser(User user) {
-        return userRepo.save(user);
-    }
-
-    public Optional<User> login(String email, String password) {
-        return userRepo.findByEmailAndPassword(email, password);
-    }
-
-    public Optional<User> findById(Long id) {
-        return userRepo.findById(id);
+    public User register(User user) {
+        return userRepository.save(user);
     }
 
     public Optional<User> findByEmail(String email) {
-        return userRepo.findByEmail(email);
+        return userRepository.findByEmail(email);
     }
 
-    public User updateUser(User user) {
-        return userRepo.save(user);
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    public void deleteUser(Long id) {
-        userRepo.deleteById(id);
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+    }
+
+    public User updateUser(Long id, User updatedUser) {
+        User user = getUserById(id);
+        user.setName(updatedUser.getName());
+        user.setEmail(updatedUser.getEmail());
+        user.setPassword(updatedUser.getPassword());
+        user.setRole(updatedUser.getRole());
+        return userRepository.save(user);
+    }
+
+    public List<User> getUsersByRole(String role) {
+        return userRepository.findByRole(role);
     }
 }
+

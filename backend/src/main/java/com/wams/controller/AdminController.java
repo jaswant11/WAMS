@@ -15,30 +15,22 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    // Create new user (employee, manager, or admin)
-    @PostMapping("/create-user")
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        userService.createUser(user);
-        return ResponseEntity.ok("User created successfully");
-    }
-
-    // Get all users
     @GetMapping("/all-users")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // Delete a user
-    @DeleteMapping("/delete-user/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.ok("User deleted successfully");
+    @PutMapping("/update/{id}")
+    public ResponseEntity<User> updateUser(
+            @PathVariable Long id,
+            @RequestBody User updated) {
+        return ResponseEntity.ok(userService.updateUser(id, updated));
     }
 
-    // Update user role
-    @PutMapping("/update-role/{id}")
-    public ResponseEntity<String> updateRole(@PathVariable Long id, @RequestParam String role) {
-        userService.updateUserRole(id, role);
-        return ResponseEntity.ok("User role updated successfully");
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        userService.getUserById(id); // Throws if not found
+        userService.userRepository.deleteById(id);
+        return ResponseEntity.ok("User deleted successfully.");
     }
 }
