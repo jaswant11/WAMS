@@ -1,3 +1,9 @@
+package com.wams.controller;
+
+import com.wams.service.FatigueService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("/fatigue")
 public class FatigueController {
@@ -5,9 +11,8 @@ public class FatigueController {
     @Autowired
     private FatigueService fatigueService;
 
-    @GetMapping("/{employeeId}")
-    public ResponseEntity<Integer> getFatigueScore(@PathVariable Long employeeId) {
-        int score = fatigueService.calculateFatigueScore(employeeId);
-        return ResponseEntity.ok(score);
+    @GetMapping("/score/{employeeId}")
+    public String getFatigueScore(@PathVariable Long employeeId) {
+        return fatigueService.getFatigueScore(employeeId);
     }
 }

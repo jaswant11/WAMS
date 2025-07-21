@@ -1,7 +1,6 @@
 package com.wams.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 public class TimeOff {
@@ -10,10 +9,19 @@ public class TimeOff {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long employeeId;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String startDate;
+    private String endDate;
     private String reason;
 
-    // Getters and setters
+    private String status; // PENDING, APPROVED, DENIED
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    private Manager manager; // who approved/denied it
+
+    // Getters and Setters
 }

@@ -1,33 +1,58 @@
+package com.wams.service;
+
+import com.wams.model.Employee;
+import com.wams.model.Shift;
+import com.wams.model.Worklog;
+import com.wams.repository.EmployeeRepository;
+import com.wams.repository.WorklogRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 public class WorklogService {
 
     @Autowired
-    private WorklogRepository worklogRepository;
+    private WorklogRepository worklogRepo;
 
-    public Worklog logCompletedShift(Shift shift) {
-        if (shift.getAssignedEmployeeId() == null) {
-            throw new IllegalArgumentException("Shift has no assigned employee");
+    @Autowired
+    private EmployeeRepository employeeRepo;
+
+    public Worklog logShiftCompletion(Shift shift) {
+        if (shift.getAssignedEmployee() == null) {
+            throw new RuntimeException("No employee assigned to this shift.");
         }
 
-        Worklog worklog = new Worklog();
-        worklog.setEmployeeId(shift.getAssignedEmployeeId());
-        worklog.setShiftId(shift.getId());
-        worklog.setDate(shift.getDate());
+        Worklog log = new Worklog();
+        log.setEmployee(shift.getAssignedEmployee());
+        log.setDate(shift.getDate());
 
-        // Calculate hours worked
-        LocalTime start = LocalTime.parse(shift.getStartTime());
-        LocalTime end = LocalTime.parse(shift.getEndTime());
-        double hoursWorked = Duration.between(start, end).toMinutes() / 60.0;
-        worklog.setHoursWorked(hoursWorked);
+        double hoursWorked = calculateHours(shift.getStartTime(), shift.getEndTime());
+        log.setHoursWorked(hoursWorked);
 
-        return worklogRepository.save(worklog);
+        return worklogRepo.save(log);
     }
 
     public List<Worklog> getWorklogsForEmployee(Long employeeId) {
-        return worklogRepository.findByEmployeeId(employeeId);
+        Employee employee = employeeRepo.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        return worklogRepo.findByEmployee(employee);
     }
 
-    public List<Worklog> getAllWorklogs() {
-        return worklogRepository.findAll();
+    public List<Worklog> getWorklogsBetweenDates(Employee employee, LocalDate from, LocalDate to) {
+        return worklogRepo.findByEmployeeAndDateBetween(employee, from, to);
+    }
+
+    private double calculateHours(String start, String end) {
+        try {
+            int startHour = Integer.parseInt(start.split(":")[0]);
+            int endHour = Integer.parseInt(end.split(":")[0]);
+            return endHour - startHour;
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid time format");
+        }
     }
 }
