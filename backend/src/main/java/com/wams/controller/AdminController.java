@@ -29,8 +29,7 @@ public class AdminController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-        userService.getUserById(id); // Throws if not found
-        userService.userRepository.deleteById(id);
+        userService.deleteUser(id);
         return ResponseEntity.ok("User deleted successfully.");
     }
 }

@@ -16,8 +16,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginRequest) {
         return userService.findByEmail(loginRequest.getEmail())
-                .filter(user -> user.getPassword().equals(loginRequest.getPassword()))
-                .map(user -> ResponseEntity.ok(user))
-                .orElseGet(() -> ResponseEntity.status(401).body("Invalid email or password"));
+            .filter(user -> user.getPassword().equals(loginRequest.getPassword()))
+            .map(user -> (ResponseEntity<?>) ResponseEntity.ok(user))
+            .orElseGet(() -> ResponseEntity.status(401).body("Invalid email or password"));
     }
 }
