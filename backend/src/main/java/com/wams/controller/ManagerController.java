@@ -10,30 +10,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/employees")
-public class EmployeeController {
+@RequestMapping("/managers")
+public class ManagerController {
 
     @Autowired
     private UserService userService;
 
-    // Get all employees (role = "employee")
+    // Get all managers
     @GetMapping
-    public ResponseEntity<List<User>> getAllEmployees() {
-        List<User> employees = userService.getAllUsers().stream()
-            .filter(user -> "employee".equalsIgnoreCase(user.getRole()))
+    public ResponseEntity<List<User>> getAllManagers() {
+        List<User> managers = userService.getAllUsers().stream()
+            .filter(user -> "manager".equalsIgnoreCase(user.getRole()))
             .collect(Collectors.toList());
-        return ResponseEntity.ok(employees);
+        return ResponseEntity.ok(managers);
     }
 
-    // Get employee by ID
+    // Get manager by ID
     @GetMapping("/{id}")
-    public ResponseEntity<User> getEmployeeById(@PathVariable Long id) {
+    public ResponseEntity<User> getManagerById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    // Update employee profile
+    // Update manager profile
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateEmployee(@PathVariable Long id, @RequestBody User updated) {
+    public ResponseEntity<User> updateManager(@PathVariable Long id, @RequestBody User updated) {
         return ResponseEntity.ok(userService.updateUser(id, updated));
     }
 }

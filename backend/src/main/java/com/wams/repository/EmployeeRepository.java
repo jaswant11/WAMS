@@ -1,7 +1,12 @@
 package com.wams.repository;
 
-import com.wams.model.Employee;
+import com.wams.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+import java.util.List;
+
+@Repository
+public interface EmployeeRepository extends JpaRepository<User, Long> {
+    List<User> findByRole(String role);
 }

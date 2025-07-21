@@ -5,7 +5,7 @@ import com.wams.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -13,16 +13,24 @@ public class UserService {
     @Autowired
     private UserRepository userRepo;
 
-    public User addUser(User user) {
+    public User registerUser(User user) {
         return userRepo.save(user);
     }
 
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
+    public Optional<User> login(String email, String password) {
+        return userRepo.findByEmailAndPassword(email, password);
     }
 
-    public User getByUsername(String username) {
-        return userRepo.findByUsername(username);
+    public Optional<User> findById(Long id) {
+        return userRepo.findById(id);
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepo.findByEmail(email);
+    }
+
+    public User updateUser(User user) {
+        return userRepo.save(user);
     }
 
     public void deleteUser(Long id) {

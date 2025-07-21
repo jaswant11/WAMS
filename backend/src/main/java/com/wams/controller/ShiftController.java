@@ -15,39 +15,33 @@ public class ShiftController {
     @Autowired
     private ShiftService shiftService;
 
-    // Manager creates a new shift
-    @PostMapping("/create/{managerId}")
-    public ResponseEntity<Shift> createShift(@PathVariable Long managerId, @RequestBody Shift shift) {
-        return ResponseEntity.ok(shiftService.createShift(managerId, shift));
+    @PostMapping
+    public ResponseEntity<Shift> createShift(@RequestBody Shift shift) {
+        return ResponseEntity.ok(shiftService.createShift(shift));
     }
 
-    // Assign shift to employee
-    @PostMapping("/{shiftId}/assign/{employeeId}")
-    public ResponseEntity<Shift> assignShift(@PathVariable Long shiftId, @PathVariable Long employeeId) {
-        return ResponseEntity.ok(shiftService.assignShift(shiftId, employeeId));
-    }
-
-    // Mark shift as complete
-    @PutMapping("/{shiftId}/complete")
-    public ResponseEntity<Shift> completeShift(@PathVariable Long shiftId) {
-        return ResponseEntity.ok(shiftService.completeShift(shiftId));
-    }
-
-    // Get all shifts (admin or manager view)
     @GetMapping
     public List<Shift> getAllShifts() {
         return shiftService.getAllShifts();
     }
 
-    // Get shifts assigned to a specific employee
     @GetMapping("/employee/{employeeId}")
     public List<Shift> getShiftsForEmployee(@PathVariable Long employeeId) {
         return shiftService.getShiftsForEmployee(employeeId);
     }
 
-    // Get shifts created by a specific manager
-    @GetMapping("/manager/{managerId}")
-    public List<Shift> getShiftsByManager(@PathVariable Long managerId) {
-        return shiftService.getShiftsByManager(managerId);
+    @PostMapping("/{shiftId}/assign/{userId}")
+    public ResponseEntity<Shift> assignShift(
+            @PathVariable Long shiftId,
+            @PathVariable Long userId) {
+        return ResponseEntity.ok(shiftService.assignShift(shiftId, userId));
+    }
+
+    @PostMapping("/{shiftId}/requirement")
+    public ResponseEntity<String> updateStaffingRequirement(
+            @PathVariable Long shiftId,
+            @RequestParam int requiredStaff) {
+        shiftService.processStaffingRequirement(shiftId, requiredStaff);
+        return ResponseEntity.ok("Staffing requirement processed.");
     }
 }

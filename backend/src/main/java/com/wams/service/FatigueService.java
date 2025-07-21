@@ -19,21 +19,23 @@ public class FatigueService {
     @Autowired
     private WorklogRepository worklogRepo;
 
-    public String getFatigueScore(Long employeeId) {
-        double hours = getNumericFatigueScore(employeeId);
-        if (hours <= 40) return "Low Fatigue (🟢)";
-        else if (hours <= 55) return "Moderate Fatigue (🟠)";
-        else return "High Fatigue (🔴)";
-    }
+    public int getFatigueScore(Long employeeId) {
+        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
 
-    public double getNumericFatigueScore(Long employeeId) {
-        Employee employee = employeeRepo.findById(employeeId)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
-
+        // Last 7 days work logs
         LocalDate now = LocalDate.now();
-        LocalDate start = now.minusDays(7);
+        List<Worklog> logs = worklogRepo.findByEmployeeAndDateBetween(employee, now.minusDays(7), now);
 
-        List<Worklog> logs = worklogRepo.findByEmployeeAndDateBetween(employee, start, now);
-        return logs.stream().mapToDouble(Worklog::getHoursWorked).sum();
+        int totalHours = logs.stream()
+                .mapToInt(Worklog::getHoursWorked)
+                .sum();
+
+        // Simple fatigue calculation
+        if (totalHours >= 60) return 100;
+        if (totalHours >= 50) return 90;
+        if (totalHours >= 40) return 75;
+        if (totalHours >= 30) return 60;
+        if (totalHours >= 20) return 45;
+        return 30;
     }
 }

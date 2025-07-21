@@ -3,6 +3,7 @@ package com.wams.service;
 import com.wams.model.Availability;
 import com.wams.model.Employee;
 import com.wams.repository.AvailabilityRepository;
+import com.wams.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +16,24 @@ public class AvailabilityService {
     @Autowired
     private AvailabilityRepository availabilityRepo;
 
-    public Availability saveAvailability(Availability availability) {
+    @Autowired
+    private EmployeeRepository employeeRepo;
+
+    public Availability submitAvailability(Long employeeId, Availability availability) {
+        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
+        availability.setEmployee(employee);
         return availabilityRepo.save(availability);
     }
 
     public List<Availability> getAvailabilityForEmployee(Long employeeId) {
-        return availabilityRepo.findByEmployeeId(employeeId);
+        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
+        return availabilityRepo.findByEmployee(employee);
     }
 
-    public boolean isEmployeeAvailable(Employee employee, LocalDate date, String startTime, String endTime) {
-        List<Availability> availableSlots = availabilityRepo.findByEmployeeAndDate(employee, date);
-        for (Availability slot : availableSlots) {
-            if (slot.getStartTime().compareTo(startTime) <= 0 &&
-                slot.getEndTime().compareTo(endTime) >= 0) {
-                return true;
-            }
-        }
-        return false;
+    public List<Availability> getAvailabilityBetweenDates(Long employeeId, String start, String end) {
+        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        return availabilityRepo.findByEmployeeAndDateBetween(employee, startDate, endDate);
     }
 }

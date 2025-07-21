@@ -12,134 +12,23 @@ import java.util.stream.Collectors;
 @Service
 public class ShiftService {
 
-    @Autowired private ShiftRepository shiftRepo;
-    @Autowired private EmployeeRepository employeeRepo;
-    @Autowired private ManagerRepository managerRepo;
-    @Autowired private WorklogService worklogService;
-    @Autowired private NotificationService notificationService;
-    @Autowired private AvailabilityService availabilityService;
-    @Autowired private FatigueService fatigueService;
+    @Autowired
+    private ShiftRepository shiftRepo;
 
-    public Shift createShift(Long managerId, Shift shift) {
-        Manager manager = managerRepo.findById(managerId)
-                .orElseThrow(() -> new RuntimeException("Manager not found"));
+    @Autowired
+    private EmployeeRepository employeeRepo;
 
-        shift.setCreatedBy(manager);
-        shift.setStatus("OPEN");
-        shift.setCurrentAssigned(0);
+    @Autowired
+    private AvailabilityRepository availabilityRepo;
 
-        Shift savedShift = shiftRepo.save(shift);
+    @Autowired
+    private NotificationRepository notificationRepo;
 
-        recommendAndAssignEmployees(savedShift);  // 🔄 Recommendation triggered here
+    @Autowired
+    private FatigueService fatigueService; // Optional – if ML is plugged in
 
-        return savedShift;
-    }
-
-    public Shift assignShift(Long shiftId, Long employeeId) {
-        Shift shift = shiftRepo.findById(shiftId)
-                .orElseThrow(() -> new RuntimeException("Shift not found"));
-
-        Employee employee = employeeRepo.findById(employeeId)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
-
-        boolean available = availabilityService.isEmployeeAvailable(employee, shift.getDate(), shift.getStartTime(), shift.getEndTime());
-        if (!available) {
-            throw new RuntimeException("Employee is not available during this shift.");
-        }
-
-        shift.setAssignedEmployee(employee);
-        shift.setCurrentAssigned(shift.getCurrentAssigned() + 1);
-
-        if (shift.getCurrentAssigned() >= shift.getRequiredEmployees()) {
-            shift.setStatus("ASSIGNED");
-            shift.setOpenForVolunteers(false);
-        }
-
-        Shift updatedShift = shiftRepo.save(shift);
-
-        notificationService.createNotification(
-                employee.getId(),
-                "You have been assigned a shift on " + shift.getDate()
-        );
-
-        return updatedShift;
-    }
-
-    public void recommendAndAssignEmployees(Shift shift) {
-        List<Employee> candidates = employeeRepo.findAll();
-        Map<Employee, Double> fatigueScores = new HashMap<>();
-
-        for (Employee emp : candidates) {
-            boolean available = availabilityService.isEmployeeAvailable(emp, shift.getDate(), shift.getStartTime(), shift.getEndTime());
-            if (available) {
-                double fatigue = fatigueService.getNumericFatigueScore(emp.getId());
-                fatigueScores.put(emp, fatigue);
-            }
-        }
-
-        List<Employee> sortedCandidates = fatigueScores.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
-
-        int assignedCount = 0;
-        for (Employee emp : sortedCandidates) {
-            if (assignedCount >= shift.getRequiredEmployees()) break;
-
-            shift.setAssignedEmployee(emp);
-            shift.setCurrentAssigned(++assignedCount);
-            notificationService.createNotification(emp.getId(), "You’ve been assigned a shift on " + shift.getDate());
-        }
-
-        if (assignedCount < shift.getRequiredEmployees()) {
-            shift.setOpenForVolunteers(true);
-            for (Employee emp : sortedCandidates) {
-                notificationService.createNotification(emp.getId(),
-                        "Volunteer shift available for " + shift.getDate() + " (" + shift.getRoleTitle() + ")");
-            }
-        }
-
-        shiftRepo.save(shift);
-    }
-
-    public Shift respondToVoluntaryShift(Long shiftId, Long employeeId, String response) {
-        Shift shift = shiftRepo.findById(shiftId)
-                .orElseThrow(() -> new RuntimeException("Shift not found"));
-        Employee employee = employeeRepo.findById(employeeId)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
-
-        if (!shift.isOpenForVolunteers()) {
-            throw new RuntimeException("This shift is not open for volunteers.");
-        }
-
-        if ("accept".equalsIgnoreCase(response)) {
-            shift.setAssignedEmployee(employee);
-            shift.setCurrentAssigned(shift.getCurrentAssigned() + 1);
-
-            if (shift.getCurrentAssigned() >= shift.getRequiredEmployees()) {
-                shift.setOpenForVolunteers(false);
-                shift.setStatus("ASSIGNED");
-            }
-
-            shiftRepo.save(shift);
-            notificationService.createNotification(employeeId, "You accepted a volunteer shift on " + shift.getDate());
-
-        } else if ("ignore".equalsIgnoreCase(response)) {
-            notificationService.createNotification(employeeId, "You ignored the volunteer shift on " + shift.getDate());
-        } else {
-            throw new RuntimeException("Invalid response. Use 'accept' or 'ignore'.");
-        }
-
-        return shift;
-    }
-
-    public Shift completeShift(Long shiftId) {
-        Shift shift = shiftRepo.findById(shiftId)
-                .orElseThrow(() -> new RuntimeException("Shift not found"));
-        shift.setStatus("COMPLETED");
-        shiftRepo.save(shift);
-        worklogService.logShiftCompletion(shift);
-        return shift;
+    public Shift createShift(Shift shift) {
+        return shiftRepo.save(shift);
     }
 
     public List<Shift> getAllShifts() {
@@ -147,15 +36,78 @@ public class ShiftService {
     }
 
     public List<Shift> getShiftsForEmployee(Long employeeId) {
-        Employee employee = employeeRepo.findById(employeeId)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
-        return shiftRepo.findByAssignedEmployee(employee);
+        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
+        return shiftRepo.findByEmployee(employee);
     }
 
-    public List<Shift> getShiftsByManager(Long managerId) {
-        Manager manager = managerRepo.findById(managerId)
-                .orElseThrow(() -> new RuntimeException("Manager not found"));
-        return shiftRepo.findByCreatedBy(manager);
+    public List<Shift> getShiftsByDate(LocalDate date) {
+        return shiftRepo.findByDate(date);
+    }
+
+    public Shift assignShift(Long shiftId, Long employeeId) {
+        Shift shift = shiftRepo.findById(shiftId).orElseThrow();
+        Employee employee = employeeRepo.findById(employeeId).orElseThrow();
+        shift.setEmployee(employee);
+        return shiftRepo.save(shift);
+    }
+
+    public String handleStaffingRequirement(LocalDate date, int requiredEmployees) {
+        List<Shift> shifts = shiftRepo.findByDate(date);
+        int currentlyAssigned = (int) shifts.stream().filter(s -> s.getEmployee() != null).count();
+
+        if (currentlyAssigned == requiredEmployees) {
+            return "Staffing is already satisfied.";
+        }
+
+        if (currentlyAssigned > requiredEmployees) {
+            int excess = currentlyAssigned - requiredEmployees;
+            // Assign VTOs
+            assignVTOs(shifts, excess);
+            return "VTO offered to " + excess + " employees.";
+        } else {
+            int shortage = requiredEmployees - currentlyAssigned;
+            return openVoluntaryShifts(date, shortage);
+        }
+    }
+
+    private void assignVTOs(List<Shift> shifts, int vtoCount) {
+        List<Shift> assignedShifts = shifts.stream()
+                .filter(s -> s.getEmployee() != null)
+                .sorted(Comparator.comparing(s -> fatigueService.getFatigueScore(s.getEmployee().getId())))
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < vtoCount && i < assignedShifts.size(); i++) {
+            Shift shift = assignedShifts.get(i);
+            sendNotification(shift.getEmployee(), "VTO available for shift on " + shift.getDate());
+        }
+    }
+
+    private String openVoluntaryShifts(LocalDate date, int shortage) {
+        List<Availability> available = availabilityRepo.findByDate(date);
+        List<Employee> interested = new ArrayList<>();
+
+        for (Availability a : available) {
+            int fatigueScore = fatigueService.getFatigueScore(a.getEmployee().getId());
+            if (fatigueScore < 80) {
+                interested.add(a.getEmployee());
+            }
+        }
+
+        int invited = 0;
+        for (Employee e : interested) {
+            sendNotification(e, "Shift available on " + date + ". Click to accept or ignore.");
+            invited++;
+            if (invited >= shortage) break;
+        }
+
+        return "Invited " + invited + " employees to fill " + shortage + " shifts.";
+    }
+
+    private void sendNotification(Employee employee, String message) {
+        Notification note = new Notification();
+        note.setEmployee(employee);
+        note.setMessage(message);
+        note.setRead(false);
+        notificationRepo.save(note);
     }
 }
-
