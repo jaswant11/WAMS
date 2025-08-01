@@ -1,39 +1,47 @@
 package com.wams.controller;
 
-import com.wams.model.Shift;
-import com.wams.service.ShiftService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wams.model.Shift;
+import com.wams.repository.ShiftRepository;
+import com.wams.service.ShiftService;
 @RestController
-@RequestMapping("/shifts")
+@RequestMapping("/manager/shift")
 public class ShiftController {
 
     @Autowired
     private ShiftService shiftService;
+      @Autowired
+private ShiftRepository shiftRepository;
 
-    @PostMapping
-    public ResponseEntity<Shift> createShift(@RequestBody Shift shift) {
-        return ResponseEntity.ok(shiftService.createShift(shift));
+    @PostMapping("/assign")
+    public ResponseEntity<String> assignEmployeeToShift(
+            @RequestParam Long shiftId,
+            @RequestParam Long employeeId) {
+        shiftService.assignEmployeeToShift(shiftId, employeeId);
+        return ResponseEntity.ok("Employee assigned to shift.");
     }
 
-    @GetMapping
-    public List<Shift> getAllShifts() {
-        return shiftService.getAllShifts();
+    @DeleteMapping("/remove")
+    public ResponseEntity<String> removeEmployeeFromShift(
+            @RequestParam Long shiftId,
+            @RequestParam Long employeeId) {
+        shiftService.removeEmployeeFromShift(shiftId, employeeId);
+        return ResponseEntity.ok("Employee removed from shift.");
     }
+    @GetMapping("/all")
+public List<Shift> getAllShifts() {
+    return shiftRepository.findAll();
+}
 
-    @GetMapping("/employee/{employeeId}")
-    public List<Shift> getShiftsForEmployee(@PathVariable Long employeeId) {
-        return shiftService.getShiftsForEmployee(employeeId);
-    }
-
-    @PostMapping("/{shiftId}/assign/{userId}")
-    public ResponseEntity<Shift> assignShift(
-        @PathVariable Long shiftId,
-        @PathVariable Long userId) {
-        return ResponseEntity.ok(shiftService.assignShift(shiftId, userId));
-    }
+   
 }

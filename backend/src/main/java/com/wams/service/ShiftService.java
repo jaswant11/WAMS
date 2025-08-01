@@ -1,13 +1,16 @@
 package com.wams.service;
 
-import com.wams.model.Shift;
-import com.wams.model.User;
-import com.wams.repository.ShiftRepository;
-import com.wams.repository.UserRepository;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.wams.model.Employee;
+import com.wams.model.Shift;
+import com.wams.repository.EmployeeRepository;
+import com.wams.repository.ShiftRepository;
+import com.wams.repository.ShiftTemplateRepository;
 
 @Service
 public class ShiftService {
@@ -16,29 +19,43 @@ public class ShiftService {
     private ShiftRepository shiftRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private EmployeeRepository employeeRepository;
 
-    public Shift createShift(Shift shift) {
-        return shiftRepository.save(shift);
-    }
+    @Autowired
+    private ShiftTemplateRepository shiftTemplateRepository;
 
-    public List<Shift> getAllShifts() {
-        return shiftRepository.findAll();
-    }
-
-    public List<Shift> getShiftsForEmployee(Long employeeId) {
-        User user = userRepository.findById(employeeId)
+    public void removeEmployeeFromShiftsInDateRange(Long employeeId, LocalDate startDate, LocalDate endDate) {
+        List<Shift> shifts = shiftRepository.findByDateBetween(startDate, endDate);
+        Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
-        return shiftRepository.findByAssignedUser(user);
+
+        for (Shift shift : shifts) {
+            if (shift.getEmployees().contains(employee)) {
+                shift.getEmployees().remove(employee);
+                shiftRepository.save(shift);
+            }
+        }
     }
 
-    public Shift assignShift(Long shiftId, Long employeeId) {
+    public void removeEmployeeFromShift(Long shiftId, Long employeeId) {
         Shift shift = shiftRepository.findById(shiftId)
                 .orElseThrow(() -> new RuntimeException("Shift not found"));
-        User user = userRepository.findById(employeeId)
+        Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
 
-        shift.setAssignedUser(user);
-        return shiftRepository.save(shift);
+        shift.getEmployees().remove(employee);
+        shiftRepository.save(shift);
+    }
+
+    public void assignEmployeeToShift(Long shiftId, Long employeeId) {
+        Shift shift = shiftRepository.findById(shiftId)
+                .orElseThrow(() -> new RuntimeException("Shift not found"));
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        if (!shift.getEmployees().contains(employee)) {
+            shift.getEmployees().add(employee);
+            shiftRepository.save(shift);
+        }
     }
 }

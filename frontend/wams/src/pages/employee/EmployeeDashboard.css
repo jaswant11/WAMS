@@ -1,0 +1,98 @@
+/* Base Layout */
+.employee-dashboard {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f8fafc;
+}
+
+/* Sidebar */
+.employee-sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #1f2937, #111827);
+  color: #fff;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+.employee-sidebar h3 {
+  margin-bottom: 25px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 10px;
+}
+
+.employee-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.employee-sidebar ul li {
+  margin-bottom: 15px;
+}
+
+.employee-sidebar ul li button {
+  width: 100%;
+  padding: 12px 15px;
+  background: #374151;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.3s, transform 0.1s;
+}
+
+.employee-sidebar ul li button:hover {
+  background: #2563eb;
+  transform: scale(1.02);
+}
+
+/* Calendar Section */
+.employee-calendar {
+  flex: 1;
+  padding: 30px;
+}
+
+.employee-calendar h2 {
+  font-size: 1.8rem;
+  color: #111827;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Override react-big-calendar styles for a cleaner look */
+.rbc-calendar {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.rbc-toolbar button {
+  background: #2563eb;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin: 0 2px;
+}
+
+.rbc-toolbar button:hover {
+  background: #1d4ed8;
+}
+
+.rbc-event {
+  background: #10b981 !important;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.rbc-today {
+  background: #dbeafe !important;
+}

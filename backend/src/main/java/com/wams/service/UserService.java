@@ -1,7 +1,12 @@
 package com.wams.service;
 
 import com.wams.model.User;
+import com.wams.model.Employee;
+import com.wams.model.Manager;
 import com.wams.repository.UserRepository;
+import com.wams.repository.EmployeeRepository;
+import com.wams.repository.ManagerRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,37 +19,61 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User register(User user) {
-        return userRepository.save(user);
-    }
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
+    @Autowired
+    private ManagerRepository managerRepository;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+    public User createUser(User user) {
+        User savedUser = userRepository.save(user);
+
+        if (user.getRole() == User.Role.EMPLOYEE) {
+            Employee emp = new Employee();
+            emp.setId(savedUser.getId());
+            emp.setUsername(savedUser.getUsername());
+            employeeRepository.save(emp);
+        } else if (user.getRole() == User.Role.MANAGER) {
+            Manager mgr = new Manager();
+            mgr.setId(savedUser.getId());
+            mgr.setUsername(savedUser.getUsername());
+            managerRepository.save(mgr);
+        }
+
+        return savedUser;
     }
 
     public User updateUser(Long id, User updatedUser) {
-        User user = getUserById(id);
-        user.setName(updatedUser.getName());
-        user.setEmail(updatedUser.getEmail());
-        user.setPassword(updatedUser.getPassword());
-        user.setRole(updatedUser.getRole());
-        return userRepository.save(user);
-    }
-
-    public List<User> getUsersByRole(String role) {
-        return userRepository.findByRole(role);
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User existing = optionalUser.get();
+            existing.setUsername(updatedUser.getUsername());
+            existing.setPassword(updatedUser.getPassword());
+            existing.setRole(updatedUser.getRole());
+            return userRepository.save(existing);
+        } else {
+            throw new RuntimeException("User not found");
+        }
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+
+            if (user.getRole() == User.Role.EMPLOYEE) {
+                employeeRepository.deleteById(id);
+            } else if (user.getRole() == User.Role.MANAGER) {
+                managerRepository.deleteById(id);
+            }
+
+            userRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("User not found");
+        }
     }
 }

@@ -1,0 +1,495 @@
+﻿body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7f6; /* Light background */
+    color: #333;
+}
+
+.admin-dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f7f6; /* Light background for the whole dashboard */
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    background-color: #ffffff; /* White sidebar */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #e0e0e0;
+}
+
+.sidebar-header {
+    margin-bottom: 30px;
+    padding: 0 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar-header h2 {
+    font-size: 28px;
+    color: #007bff; /* Primary blue for header */
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.sidebar-menu li {
+    padding: 15px 25px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    border-left: 5px solid transparent;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-menu li:hover {
+    background-color: #e9f5ff; /* Light blue on hover */
+    color: #007bff;
+    border-left-color: #007bff;
+    transform: translateX(5px);
+}
+
+.sidebar-menu li.active {
+    background-color: #e0f2ff; /* Slightly darker blue for active */
+    color: #007bff;
+    font-weight: bold;
+    border-left-color: #007bff;
+}
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    padding: 40px;
+    background-color: #f4f7f6; /* Light background */
+}
+
+.dashboard-header {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.dashboard-header h1 {
+    font-size: 42px;
+    font-weight: 800;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Dashboard Sections */
+.dashboard-section {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-section h3 {
+    font-size: 26px;
+    margin-bottom: 25px;
+    color: #007bff;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Forms */
+.dashboard-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.dashboard-form input,
+.dashboard-form select {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    min-width: 220px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    color: #333;
+    background-color: #fdfdfd;
+}
+
+.dashboard-form input:focus,
+.dashboard-form select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+/* Buttons */
+.dashboard-form button,
+.user-table button,
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-edit,
+.btn-delete,
+.btn-recommendation {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.btn-edit {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.btn-edit:hover {
+    background-color: #e0a800;
+    transform: translateY(-2px);
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+.btn-recommendation {
+    background-color: #17a2b8; /* Info blue */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-recommendation:hover {
+    background-color: #138496;
+    transform: translateY(-2px);
+}
+
+.recommendation-icon {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+.btn-recommendation:hover .recommendation-icon {
+    transform: rotate(15deg) scale(1.1); /* Example animation */
+}
+
+
+/* User Table */
+.user-table {
+    width: 100%;
+    border-collapse: separate; /* Use separate for rounded corners on cells */
+    border-spacing: 0;
+    margin-top: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden; /* Ensures rounded corners are applied */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.user-table th,
+.user-table td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.user-table th {
+    background-color: #f8f9fa; /* Light grey header */
+    color: #555;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.user-table tr:last-child td {
+    border-bottom: none; /* No border for the last row */
+}
+
+.user-table tbody tr:hover {
+    background-color: #f0f8ff; /* Very light blue on row hover */
+    transition: background-color 0.2s ease;
+}
+
+.user-table .user-actions button {
+    margin-right: 8px;
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+/* Fatigue Score Display */
+.fatigue-score {
+    font-weight: bold;
+    color: #007bff; /* Blue for fatigue score */
+    margin-left: 5px;
+}
+
+/* Days of week checkbox labels */
+.days-of-week-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100%; /* Ensure it takes full width for centering */
+}
+
+.days-of-week-checkboxes label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #555;
+    font-size: 15px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.days-of-week-checkboxes label:hover {
+    color: #007bff;
+}
+
+.days-of-week-checkboxes input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #007bff; /* Custom checkbox color */
+    cursor: pointer;
+}
+
+/* Recommendations List */
+.recommendations-list {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: #e9f5ff; /* Light blue background */
+    border-radius: 10px;
+    border: 1px solid #cce0ff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+}
+
+.recommendations-list h4 {
+    color: #0056b3;
+    margin-bottom: 15px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.recommendations-list ul {
+    list-style: none;
+    padding: 0;
+    max-height: 200px; /* Limit height for scroll if many recommendations */
+    overflow-y: auto;
+}
+
+.recommendations-list li {
+    background-color: #f0f8ff;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: 1px solid #d6eaff;
+    color: #333;
+    font-size: 15px;
+    transition: background-color 0.2s ease;
+}
+
+.recommendations-list li:hover {
+    background-color: #e0f2ff;
+}
+
+/* Worklog Section Specifics */
+.worklog-section {
+    position: relative;
+    overflow: hidden; /* For potential future animations */
+}
+
+.worklog-submit-btn {
+    width: auto; /* Adjust width for submit button */
+    margin-top: 15px;
+}
+
+.worklog-response {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #28a745; /* Green for success */
+    text-align: center;
+    font-size: 18px;
+    animation: fadeIn 0.5s ease-out; /* Simple fade-in animation */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.api-info-box {
+    margin-top: 30px;
+    background-color: #f8f9fa; /* Light grey background */
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: left;
+    box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.03);
+}
+
+.api-info-box h4 {
+    color: #007bff;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.api-info-box code {
+    display: block;
+    background-color: #e9ecef;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 14px;
+    color: #c7254e; /* Reddish for code */
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+.api-info-box pre.json-sample {
+    background: #343a40; /* Dark background for JSON */
+    padding: 15px;
+    border-radius: 8px;
+    color: #28a745; /* Green for JSON content */
+    overflow-x: auto;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .admin-dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: center;
+        padding: 15px 0;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .sidebar-header {
+        display: none; /* Hide header on small screens */
+    }
+
+    .sidebar-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .sidebar-menu li {
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+
+    .sidebar-menu li:hover,
+    .sidebar-menu li.active {
+        border-left-color: transparent;
+        border-bottom-color: #007bff;
+        transform: none;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .dashboard-form input,
+    .dashboard-form select,
+    .dashboard-form button {
+        min-width: unset;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-header h1 {
+        font-size: 32px;
+    }
+
+    .dashboard-section h3 {
+        font-size: 22px;
+    }
+
+    .user-table th,
+    .user-table td {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .user-table .user-actions button {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}

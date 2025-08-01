@@ -1,24 +1,32 @@
 package com.wams.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "managers")
+@Table(name = "manager")
 public class Manager {
 
     @Id
-    private Long id;
+    private Long id; // Matches user.id
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private User user;
+    private String name;
 
-    // Optional: add manager-specific fields here
+    private String department;
 
-    // Getters & Setters
+    private String username;
+
+    // --- Getters and Setters ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getDepartment() { return department; }
+    public void setDepartment(String department) { this.department = department; }
+
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 }

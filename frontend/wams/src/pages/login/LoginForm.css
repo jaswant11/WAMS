@@ -1,0 +1,541 @@
+/* LoginForm.css */
+.login-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+}
+
+.login-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.gradient-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #0856ac, #0582d7, #00bbe3);
+  opacity: 0.8;
+  animation: gradientShift 15s ease infinite;
+  background-size: 400% 400%;
+}
+
+.gradient-circle-top,
+.gradient-circle-bottom {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+}
+
+.gradient-circle-top {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #00ffe5, transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation: float 8s ease-in-out infinite;
+}
+
+.gradient-circle-bottom {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #ff00aa, transparent 70%);
+  bottom: -150px;
+  right: -100px;
+  animation: float 12s ease-in-out infinite;
+}
+
+.login-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.login-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #0856ac, #0582d7, #00bbe3);
+  animation: progressBar 3s ease-in-out infinite;
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.company-logo {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  border-radius: 12px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.company-logo:hover {
+  transform: rotate(15deg) scale(1.1);
+}
+
+.company-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.welcome-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.welcome-text {
+  display: block;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: #0856ac;
+}
+
+.company-name {
+  font-weight: 700;
+  background: linear-gradient(to right, #0856ac, #0582d7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+}
+
+.welcome-subtitle {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+/* Form styling */
+.login-form {
+  margin-bottom: 30px;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 25px;
+  z-index: 1;
+}
+
+.form-group label {
+  position: absolute;
+  top: 16px;
+  left: 45px;
+  color: #999;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.form-group input {
+  width: 100%;
+  height: 50px;
+  padding: 10px 20px 10px 45px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: rgba(0, 123, 255, 0.03);
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #0582d7;
+  box-shadow: 0 0 0 3px rgba(5, 130, 215, 0.2);
+  outline: none;
+  background-color: #fff;
+}
+
+.form-group.focused label,
+.form-group.has-value label {
+  top: -10px;
+  left: 15px;
+  font-size: 0.8rem;
+  background: #fff;
+  padding: 0 5px;
+  border-radius: 4px;
+  z-index: 2;
+  color: #0582d7;
+  font-weight: 600;
+}
+
+.input-highlight {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, #0582d7, #00bbe3);
+  transition: width 0.4s ease;
+  z-index: 2;
+}
+
+.form-group.focused .input-highlight {
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.form-group.focused .input-icon,
+.form-group.has-value .input-icon {
+  color: #0582d7;
+}
+
+/* Button styling */
+.login-btn {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(to right, #0856ac, #0582d7);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 30px;
+}
+
+.login-btn:hover {
+  background: linear-gradient(to right, #0582d7, #00bbe3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(5, 130, 215, 0.3);
+}
+
+.login-btn:active {
+  transform: translateY(0);
+}
+
+.login-btn .btn-text {
+  position: relative;
+  z-index: 2;
+  letter-spacing: 0.5px;
+}
+
+.login-btn .btn-icon {
+  position: relative;
+  margin-left: 10px;
+  z-index: 2;
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.login-btn:hover .btn-icon {
+  transform: translateX(5px);
+}
+
+.login-btn .btn-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.1)
+  );
+  transform: translateX(-100%);
+  transition: none;
+  z-index: 1;
+}
+
+.login-btn:hover .btn-glow {
+  transform: translateX(100%);
+  transition: transform 0.8s ease;
+}
+
+.login-btn.submitting {
+  background: #0582d7;
+  cursor: not-allowed;
+}
+
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.spinner div {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+.spinner .dot1 {
+  animation-delay: 0s;
+}
+
+.spinner .dot2 {
+  animation-delay: 0.2s;
+}
+
+.spinner .dot3 {
+  animation-delay: 0.4s;
+}
+
+/* Card footer */
+.card-footer {
+  text-align: center;
+}
+
+.forgot-password {
+  background: none;
+  border: none;
+  color: #0582d7;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 5px;
+  margin-bottom: 15px;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+  color: #0856ac;
+}
+
+.divider {
+  position: relative;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.1), transparent);
+}
+
+.divider span {
+  padding: 0 15px;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.create-account {
+  background: none;
+  border: 1px solid rgba(0, 123, 255, 0.3);
+  color: #0582d7;
+  font-size: 0.9rem;
+  padding: 10px 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.create-account:hover {
+  background: rgba(0, 123, 255, 0.05);
+  border-color: rgba(0, 123, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.create-account span {
+  margin-left: 5px;
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.create-account:hover span {
+  transform: translateX(3px);
+}
+
+/* Error message */
+.error-message {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background: rgba(255, 0, 0, 0.1);
+  border-radius: 8px;
+  color: #d32f2f;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  animation: shake 0.5s ease;
+}
+
+.error-icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+/* Floating elements */
+.floating-elements {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.floating-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.circle-1 {
+  width: 150px;
+  height: 150px;
+  background: #0582d7;
+  top: 20%;
+  left: 10%;
+  animation: float 18s ease-in-out infinite;
+}
+
+.circle-2 {
+  width: 250px;
+  height: 250px;
+  background: #00bbe3;
+  bottom: 10%;
+  right: 15%;
+  animation: float 14s ease-in-out infinite reverse;
+}
+
+.circle-3 {
+  width: 100px;
+  height: 100px;
+  background: #0856ac;
+  top: 60%;
+  left: 30%;
+  animation: float 12s ease-in-out infinite 2s;
+}
+
+.floating-square {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: rgba(0, 187, 227, 0.2);
+  top: 30%;
+  right: 20%;
+  transform: rotate(45deg);
+  animation: pulse 8s ease-in-out infinite;
+}
+
+.floating-triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 100px solid rgba(8, 86, 172, 0.1);
+  bottom: 20%;
+  left: 20%;
+  animation: rotate 20s linear infinite;
+}
+
+/* Animations */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+  25% { transform: translateY(-20px) translateX(10px) rotate(5deg); }
+  50% { transform: translateY(10px) translateX(-10px) rotate(-5deg); }
+  75% { transform: translateY(-10px) translateX(15px) rotate(5deg); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(0.5); opacity: 0.5; }
+  50% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1) rotate(45deg); opacity: 0.2; }
+  50% { transform: scale(1.2) rotate(45deg); opacity: 0.4; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes progressBar {
+  0% { width: 0; left: 0; right: auto; }
+  50% { width: 100%; left: 0; right: auto; }
+  51% { width: 100%; left: auto; right: 0; }
+  100% { width: 0; left: auto; right: 0; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+  .login-card {
+    padding: 30px;
+    border-radius: 10px;
+  }
+  
+  .welcome-title {
+    font-size: 1.8rem;
+  }
+  
+  .form-group input {
+    height: 45px;
+    font-size: 0.9rem;
+  }
+  
+  .login-btn {
+    height: 45px;
+    font-size: 0.9rem;
+  }
+}

@@ -1,11 +1,16 @@
 package com.wams.service;
 
-import com.wams.model.Employee;
-import com.wams.repository.EmployeeRepository;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.wams.dto.EmployeeDetailDTO;
+import com.wams.model.User;
+import com.wams.repository.EmployeeRepository;
+import com.wams.repository.UserRepository;
 
 @Service
 public class EmployeeService {
@@ -13,19 +18,27 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<EmployeeDetailDTO> getAllEmployeeDetails() {
+        return employeeRepository.findAll().stream()
+                .map(emp -> {
+                    Optional<User> userOpt = userRepository.findById(emp.getId());
+                    String username = userOpt.map(User::getUsername).orElse("unknown");
+                    return new EmployeeDetailDTO(emp.getId(), username, emp.getName(), emp.getAvailable(), emp.getDepartment());
+                }).collect(Collectors.toList());
     }
 
-    public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee not found with ID: " + id));
-    }
-
-    public Employee updateEmployee(Long id, Employee updated) {
-        Employee emp = getEmployeeById(id);
-        emp.setUser(updated.getUser());
-        // Add any custom field updates here
-        return employeeRepository.save(emp);
+    public List<EmployeeDetailDTO> filterByAvailabilityAndDepartment(Boolean available, String department) {
+        return employeeRepository.findAll().stream()
+                .filter(emp ->
+                        (available == null || emp.getAvailable() == available) &&
+                        (department == null || emp.getDepartment().equalsIgnoreCase(department)))
+                .map(emp -> {
+                    Optional<User> userOpt = userRepository.findById(emp.getId());
+                    String username = userOpt.map(User::getUsername).orElse("unknown");
+                    return new EmployeeDetailDTO(emp.getId(), username, emp.getName(), emp.getAvailable(), emp.getDepartment());
+                }).collect(Collectors.toList());
     }
 }

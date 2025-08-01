@@ -1,41 +1,78 @@
 package com.wams.service;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import com.wams.model.User;
-import com.wams.model.Worklog;
-import com.wams.repository.UserRepository;
-import com.wams.repository.WorklogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
+import com.wams.dto.FatigueDTO;
+import com.wams.dto.FatigueRecommendationDTO;
+import com.wams.model.Employee;
+import com.wams.model.Worklog;
+import com.wams.repository.EmployeeRepository;
+import com.wams.repository.WorklogRepository;
 
 @Service
 public class FatigueService {
+    @Autowired
+private EmployeeRepository employeeRepository;
 
     @Autowired
     private WorklogRepository worklogRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    public FatigueDTO calculateFatigue(Long employeeId) {
+        LocalDate today = LocalDate.now();
+        LocalDate sevenDaysAgo = today.minusDays(7);
 
-    // Returns a fatigue score (0 = fresh, 100 = max fatigue) based on hours worked in last 7 days
-    public int getFatigueScore(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        List<Worklog> logs = worklogRepository.findByEmployeeIdAndDateBetween(employeeId, sevenDaysAgo, today);
+        long totalHours = logs.stream()
+                .mapToLong(log -> java.time.Duration.between(log.getStartTime(), log.getEndTime()).toHours())
+                .sum();
 
-        LocalDate now = LocalDate.now();
-        LocalDate weekAgo = now.minusDays(7);
+        double fatigueScore = Math.min((totalHours / 60.0) * 100.0, 100.0);
 
-        List<Worklog> logs = worklogRepository.findByEmployeeAndDateBetween(user, weekAgo, now);
+        FatigueDTO dto = new FatigueDTO();
+        dto.setEmployeeId(employeeId);
+        dto.setTotalHours(totalHours);
+        dto.setFatigueScore(fatigueScore);
 
-        int totalHours = logs.size() * 8; // Adjust as needed, or sum actual hours from worklog fields
-
-        if (totalHours >= 60) return 100;
-        if (totalHours >= 50) return 90;
-        if (totalHours >= 40) return 75;
-        if (totalHours >= 30) return 60;
-        if (totalHours >= 20) return 45;
-        return 30;
+        return dto;
     }
+    public List<FatigueRecommendationDTO> getRecommendations() {
+    List<Employee> employees = employeeRepository.findAll();
+
+    return employees.stream()
+        .map(emp -> {
+            FatigueDTO fatigue = calculateFatigue(emp.getId());
+            return new FatigueRecommendationDTO(emp.getId(), emp.getName(), fatigue.getFatigueScore());
+        })
+        .sorted((a, b) -> Double.compare(a.getFatigueScore(), b.getFatigueScore()))
+        .collect(Collectors.toList());
+}
+// ✅ ADDED: Get recommended employees for shift based on fatigue score
+  public List<FatigueRecommendationDTO> getRecommendedEmployeesForShift(LocalDate date, Long templateId) {
+    List<Employee> allEmployees = employeeRepository.findAll();
+    List<Employee> unassigned = new ArrayList<>();
+
+    for (Employee emp : allEmployees) {
+        boolean assigned = emp.getShifts().stream()
+                .anyMatch(shift -> shift.getDate().equals(date) &&
+                        shift.getShiftTemplate().getId().equals(templateId));
+        if (!assigned) {
+            unassigned.add(emp);
+        }
+    }
+
+    return unassigned.stream()
+            .map(emp -> {
+                FatigueDTO fatigue = calculateFatigue(emp.getId());
+                return new FatigueRecommendationDTO(emp.getId(), emp.getName(), fatigue.getFatigueScore());
+            })
+            .sorted(Comparator.comparingDouble(FatigueRecommendationDTO::getFatigueScore))
+            .collect(Collectors.toList());
+}
+
 }

@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('kpupos.jpg'); /* Replace with the path to your image */
+  background-size: cover;
+  background-position: center;
+}
+
+.app-container {
+  background-color: rgba(255, 255, 255, 0.8); /* Light white overlay */
+  min-height: 100vh; /* Full height */
+  padding: 20px; /* Add some padding */
+  display: flex;
+  flex-direction: column;
+}
